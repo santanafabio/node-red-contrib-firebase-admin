@@ -23,12 +23,8 @@ output: <whatever data was at the path 'foo/bar' in the rtdb database>
 ## rtdb-set
 Set data at a path in the rtdb database. Use 'on' snapshot so will fire every time the data at the path changes and so drive flow execution from that point.
 
-input: {payload: {"path": "foo/bar", "obj": {"some": "data", "foo": "17"}}}
-
 ## rtdb-push
 Pushes the new object onto an array under the path
-
-input: {payload: {"path": "foo/bar", "obj": {"some": "data", "foo": "17"}}}
 
 ## rtdb-query
 Set up a reactive query for a path in the rtdb database. 
@@ -67,6 +63,7 @@ input: {payload: {path: 'foo/bar'}, {some: 'object', foo: 17}}
 Adds the new object under the collection the path describes and assigns it a random id
 
 input: {payload: {path: 'foo/bar'}, {some: 'object', foo: 17}}
+output: The id of the new document
 
 ## firestore-query
 Set up a reactive query for a collection in the firestore database.

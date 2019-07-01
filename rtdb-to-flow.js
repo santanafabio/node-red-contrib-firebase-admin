@@ -1,9 +1,8 @@
-
+const runtime = require('node-red').runtime
 
 let oldpath
 
 module.exports = function(RED) {
-
   function FirebaseAdmin(config) {
     RED.nodes.createNode(this, config);
     var node = this;
@@ -11,9 +10,20 @@ module.exports = function(RED) {
     const cb = (res)=>{
       //console.log('firebase get result '+res)
       //console.dir(res)
-      let val = res.val()
-      //console.log('val='+val)
-      node.send({payload:val})
+      if(config.env_var && process.env[config.env_var]){
+        let val = res.val()
+        runtime.flows.getFlow({id: val.id}).then((flow)=>{
+          console.log('rtdb-to-flow old flow updated_at = '+flow.updated_at+' new flow updated_at = '+val.updated_at)
+          if(!flow.updated_at || val.updated_at > flow.updated_at){
+            console.log('updating flow...')
+            runtime.flows.updateFlow({id: val.id, flow: val})
+          }
+          //console.log('val='+val)
+          node.send({payload:val})
+        })
+      } else {
+        console.log('skipping flow update because environment variable '+config.env_var+' was either not defined or not set to true')
+      }
     }
 
     let setUpListener = (path)=>{
@@ -49,5 +59,5 @@ module.exports = function(RED) {
 
 
   }
-  RED.nodes.registerType("rtdb-get", FirebaseAdmin);
+  RED.nodes.registerType("rtdb-to-flow", FirebaseAdmin);
 }

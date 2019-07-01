@@ -1,17 +1,20 @@
 <script type="text/javascript">
-  RED.nodes.registerType('rtdb-push',{
+  RED.nodes.registerType('rtdb-to-flow',{
 
     category: 'firebase-admin',
     color: '#a6bbcf',
     defaults: {
       name: {value:""},
+      flowId: {value:""},
+      path: {value:""},
+      env_var: {value:""},
       cred: {value: "", type: 'firebase-config'}
     },
     inputs:1,
     outputs:1,
     icon: "firebase-admin-icon.png",
     label: function() {
-      return this.name||"rtdb-push";
+      return this.name||"rtdb-to-flow";
     },
 
     oneditsave: function() {
@@ -32,19 +35,29 @@
 
 </script>
 
-<script type="text/x-red" data-template-name="rtdb-push">
+<script type="text/x-red" data-template-name="rtdb-to-flow">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 
     <div class="form-row">
+        <label for="node-input-path"><i class="icon-tag"></i> Path</label>
+        <input type="text" id="node-input-path" placeholder="Path">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-env_var"><i class="icon-tag"></i> Environment variable to allow update</label>
+        <input type="text" id="node-input-env_var" placeholder="Env var">
+    </div>
+
+    <div class="form-row">
         <label for="node-input-cred"><i class="icon-tag"></i> Credentials</label>
-        <input type="text" id="node-input-cred" placeholder="Name">
+        <input type="text" id="node-input-cred" placeholder="Credentials">
     </div>
 
 </script>
 
-<script type="text/x-red" data-help-name="rtdb-push">
-    <p>A node that wraps the rtdb-push SDK.</p>
+<script type="text/x-red" data-help-name="rtdb-to-flow">
+    <p>A node that wraps the rtdb-to-flow SDK.</p>
 </script>
